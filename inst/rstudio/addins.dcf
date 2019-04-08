@@ -1,0 +1,4 @@
+Name: photon
+Description: Launches Photon Electron App Builder
+Binding: launch_photonBuild()
+Interactive: true
