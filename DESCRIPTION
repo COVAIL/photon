@@ -1,0 +1,24 @@
+Package: photon
+Type: Package
+Title: photon: build electron apps using RStudio addins
+Version: 0.0.1
+Author: Peter Gordon, Slava Nikitin, Abbas Rizvi
+Maintainer: Pete Gordon <pgordon@cbuscollaboratory.com>
+Description: Build self-contained Shiny Apps via Electron software framework
+VignetteBuilder:
+	knitr
+Imports:
+	shiny,
+	stats,
+	utils
+Suggests:
+	knitr,
+	rmarkdown
+Depends:
+	R (>= 3.4.0)
+License: Artistic-2.0
+RoxygenNote: 6.1.0
+SystemDependency: 
+	node
+	npm
+Encoding: UTF-8
