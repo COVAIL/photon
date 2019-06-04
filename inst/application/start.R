@@ -1,16 +1,24 @@
-input_path <- "~/Desktop" 
+input_path <- "~/Desktop/photon-shiny-addin" 
 
-startFun <- function(input_path){
-  input_path <- paste0(input_path,  "/", "electron-quick-start")
+startFun <- function(input_path, packages){
+  input_path <- sprintf("%s/electron-quick-start", input_path) 
   #confirm versions greater than (node 8.4.0 and npm 5.3)
   nodeVersion <- system2("node", args="-v", stdout=TRUE, stderr=TRUE)
   npmVersion <- system2("npm", args="-v", stdout=TRUE, stderr=TRUE)
   #if node not available, notify to install node and npm globally 
-  #npm i –g electron-packager
-  #electronPackagerVersion <- system("npm list -g electron-packager", intern=TRUE)
+  
   electronPackagerVersion <- system2("npm", args="list -g electron-packager" , stdout=TRUE, stderr=TRUE)
+  
+  if(grepl("electron", electronPackagerVersion[2])){
+    electronPackagerVersion <- str_extract(electronPackagerVersion[2], "[0-9]+\\.[0-9]+\\.[0-9]+")
+  } else{
+    system2("npm", args='install electron-packager -g', stdout=TRUE, stderr = TRUE)
+    electronPackagerVersion <- str_extract(electronPackagerVersion[2], "[0-9]+\\.[0-9]+\\.[0-9]+")
+  }
+  
   #confirm git is installed and available
   gitVersion <- system2("git", args="--version", stdout=TRUE, stderr=TRUE)
+  gitVersion <- str_extract(gitVersion, "[0-9]+\\.[0-9]+\\.[0-9]+")
   #if git not available, notify to install git
   #git clone electron-shiny sample app
   
@@ -22,26 +30,57 @@ startFun <- function(input_path){
   }
   
   
-  subDir <- tempdir()
+  # subDir <- tempdir()
+  # 
+  # if (!file.exists(subDir)){
+  #   dir.create(file.path(subDir))
+  # }
+  # 
+  #unlink("temp/*")
   
-  if (!file.exists(subDir)){
-    dir.create(file.path(subDir))
-  }
-  unlink("temp/*")
   
-  file.copy(from=list.files('.', "*.R"), 
-            to="./electron-quick-start", 
-            overwrite=TRUE,
-            recursive=TRUE, 
-            copy.mode=TRUE)
+  ### this copies your app.R
+  # file.copy(from=list.files('.', "*.R"), 
+  #           to="./electron-quick-start", 
+  #           overwrite=TRUE,
+  #           recursive=TRUE, 
+  #           copy.mode=TRUE)
   
   #Run R Portable for platform you are on.  Install packages needed for Shiny app
-  setwd("./electron-quick-start/R-Portable-Mac")
-  system2("R", "--no-save", stdout = TRUE, stderr = TRUE)  
+  
+  r_portable_path <- sprintf("%s/R-Portable-Mac", input_path)
   
   
+  r_electron_version <- system(sprintf("cd %s; ./R CMD BATCH --version", r_portable_path),
+                               intern = TRUE)[5]
+  
+  r_electron_version <- str_extract(r_electron_version, "[0-9]+\\.[0-9]+\\.[0-9]+")
+  
+  # run install packages
+  
+  packages <- paste("callr", sep=",")
+  
+  system(
+    sprintf(
+      "cd %s; ./R --file=./install_packages.R -q --slave --args packages %s", 
+      r_portable_path, 
+      packages
+      )
+    )
+  
+  
+  system(sprintf("cd %s; npm run package-mac", r_portable_path))
+  
+  # install R packages in portable directory 
+  
+  
+  
+  
+  # npm package-mac
   
 }
+
+system.time({startFun(input_path)})
 
 #npm install
 
