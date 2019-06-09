@@ -1,6 +1,7 @@
-input_path <- "~/Desktop/photon-shiny-addin" 
-
-startFun <- function(input_path, packages){
+startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_packages=NULL){
+  library(stringr)
+  message("Running Photon")
+  message("The directory is ", input_path)
   input_path <- sprintf("%s/electron-quick-start", input_path) 
   #confirm versions greater than (node 8.4.0 and npm 5.3)
   nodeVersion <- system2("node", args="-v", stdout=TRUE, stderr=TRUE)
@@ -48,28 +49,50 @@ startFun <- function(input_path, packages){
   
   #Run R Portable for platform you are on.  Install packages needed for Shiny app
   
-  r_portable_path <- sprintf("%s/R-Portable-Mac", input_path)
-  
-  
-  r_electron_version <- system(sprintf("cd %s; ./R CMD BATCH --version", r_portable_path),
-                               intern = TRUE)[5]
-  
-  r_electron_version <- str_extract(r_electron_version, "[0-9]+\\.[0-9]+\\.[0-9]+")
-  
-  # run install packages
-  
-  packages <- paste("callr", sep=",")
-  
-  system(
-    sprintf(
-      "cd %s; ./R --file=./install_packages.R -q --slave --args packages %s", 
-      r_portable_path, 
-      packages
+  # if(.Platform$OS.type=="unix"){
+    r_portable_path <- sprintf("%s/R-Portable-Mac", input_path)
+    
+    
+    r_electron_version <- system(sprintf("cd %s; ./R CMD BATCH --version", r_portable_path),
+                                 intern = TRUE)[5]
+    
+    r_electron_version <- str_extract(r_electron_version, "[0-9]+\\.[0-9]+\\.[0-9]+")
+    
+    # run install packages
+    # input <- list()
+    # input$cran_packages <- paste("callr" , "tidyr", sep=",")
+    # input$github_packages <- "bnosac/cronR"
+    # input$bioc_packages <- "gwasurvivr"
+    
+    if(is.null(bioc_packages)){
+      bioc_packages <- "NULL"
+    } 
+    
+    if (is.null(cran_packages)){
+      cran_packages <- "NULL"
+    } 
+    
+    if (is.null(github_packages)){
+      github_packages <- "NULL"
+    }
+    
+    system(
+      sprintf(
+        "cd %s; ./R --file=./install_packages.R -q --slave --args cran_packages %s github_packages %s bioc_packages %s", 
+        r_portable_path, 
+        cran_packages,
+        github_packages,
+        bioc_packages
       )
     )
+    
+    
+    system(sprintf("cd %s; npm run package-mac", r_portable_path))
+  # }else if (.Platform$OS.type=="windows"){
+  #   #### 
+  # }
+  # 
   
-  
-  system(sprintf("cd %s; npm run package-mac", r_portable_path))
   
   # install R packages in portable directory 
   
@@ -79,17 +102,20 @@ startFun <- function(input_path, packages){
   # npm package-mac
   
 }
+# debugonce(startFun)
+# 
+# startFun("~/Desktop/photon-shiny-addin/", cran_packages=NULL, bioc_packages = NULL, github_packages = NULL)
 
-system.time({startFun(input_path)})
-
-#npm install
-
-#npm start
-
-
-#??????  How to run install of packages for Windows if you are on a Mac.
-
-#Run your R Project on Windows and use the Add-In to Install packages need for Shiny app
-
+# system.time({startFun(input_path)})
+# 
+# #npm install
+# 
+# #npm start
+# 
+# 
+# #??????  How to run install of packages for Windows if you are on a Mac.
+# 
+# #Run your R Project on Windows and use the Add-In to Install packages need for Shiny app
+# 
 
 
