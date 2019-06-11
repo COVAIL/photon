@@ -30,7 +30,8 @@ startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_
     system2("git", 
             args=c("clone https://github.com/ColumbusCollaboratory/electron-quick-start", input_path),
             stdout = TRUE, 
-            stderr = TRUE)
+            stderr = TRUE, 
+            env=environment())
   }
   
   
