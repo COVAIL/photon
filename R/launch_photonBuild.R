@@ -3,7 +3,7 @@
 #' @import shiny
 #' @export
 
-launch_photoBuild <- function() {
+launch_photonBuild <- function() {
   fpath <- system.file("application", package = "photon")
   # Use a modal dialog as a viewr.
   #viewer <- shiny::paneViewer()
