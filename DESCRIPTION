@@ -9,6 +9,7 @@ VignetteBuilder:
 	knitr
 Imports:
 	shiny,
+	miniUI,
 	stringr,
 	batch,
 	magrittr,

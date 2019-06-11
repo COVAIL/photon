@@ -1,5 +1,5 @@
 #' @title Launch an RStudio addin to build ShinyApp using Electron Framework 
-#' 
+#' @import miniUI
 #' @export 
 
 
