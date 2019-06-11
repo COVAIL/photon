@@ -17,7 +17,7 @@ photon_rstudioaddin <- function(RscriptRepository) {
   requireNamespace("shiny")
   requireNamespace("miniUI")
   requireNamespace("shinyFiles")
-  
+  #library(photon)
   # current_repo <- file.path(system.file("extdata", package="cronR"), ".RscriptRepository.rds")
   # if(file.access(dirname(current_repo), mode = 2) == -1){
   #   ## No access to the root folder by this user, take tempfolder - will not persist across R sessions
@@ -158,13 +158,13 @@ photon_rstudioaddin <- function(RscriptRepository) {
 
       rscript_args <- input$rscript_args
       
-      source("~/Desktop/photon-shiny-addin/R/start.R")
+     #source("~/Desktop/photon-shiny-addin/R/start.R")
       #print(input$dirSelect)
       #print(getSelectedDir(inputui = input$dirSelect))
       
       #print(as.character(shinyFiles::parseDirPath(volumes, input$dirSelect)))
       
-      startFun(as.character(shinyFiles::parseDirPath(volumes, input$dirSelect)), 
+      photon::startFun(as.character(shinyFiles::parseDirPath(volumes, input$dirSelect)), 
                input$cran_packages,
                input$bioc_packages,
                input$github_packages)
