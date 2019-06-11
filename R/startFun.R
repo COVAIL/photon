@@ -1,6 +1,5 @@
 #' @import stringr
 #' @export
-
 startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_packages=NULL){
   library(stringr)
   message("Running Photon")
@@ -14,8 +13,9 @@ startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_
   electronPackagerVersion <- system2("npm", args="list -g electron-packager" , stdout=TRUE, stderr=TRUE, wait=TRUE)
   
   if(grepl("electron", electronPackagerVersion[2])){
-    electronPackagerVersion <- str_extract(electronPackagerVersion[2], "[0-9]+\\.[0-9]+\\.[0-9]+")
+    electronPackagerVersion <- stringr::str_extract(electronPackagerVersion[2], "[0-9]+\\.[0-9]+\\.[0-9]+")
   } else{
+    system2("npm", args='install electron --verbose', stdout=TRUE, stderr = TRUE, wait=TRUE)
     system2("npm", args='install electron-packager -g', stdout=TRUE, stderr = TRUE, wait=TRUE)
     electronPackagerVersion <- str_extract(electronPackagerVersion[2], "[0-9]+\\.[0-9]+\\.[0-9]+")
   }
@@ -88,7 +88,6 @@ startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_
         github_packages,
         bioc_packages
       ), wait=TRUE
-      
     )
     
     
