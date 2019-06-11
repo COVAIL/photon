@@ -61,11 +61,10 @@ photon_rstudioaddin <- function(RscriptRepository) {
                                                           shiny::div(class = "control-label", shiny::strong("Selected Rscript")),
                                                           shiny::verbatimTextOutput('currentdirselected'),
                                                           shiny::dateInput('date', label = "Creation date:", startview = "month", weekstart = 1, min = Sys.Date()),
-                                                          shiny::textInput('rscript_args', label = "Additional arguments to Rscript", value = ""),
-                                                          shiny::textInput('rscript_repository', label = "Rscript repository path: launch & log location", value = RscriptRepository)
+                                                          shiny::textInput('jobdescription', label = "Job description", value = "Runs a model to predict survival outcomes")
+                                                    
                                             ),
                                             shiny::column(3,
-                                                          shiny::textInput('jobdescription', label = "Job description", value = "Runs a model to predict survival outcomes"),
                                                           shiny::textInput('cran_packages', label = "CRAN packages", value = "mgcv,matrixStats"),
                                                           shiny::textInput('github_packages', label = "GitHub packages", value = "thomasp85/patchwork"),
                                                           shiny::textInput('bioc_packages', label = "Bioconductor packages", value = "SummarizedExperiment,VariantAnnotation")
@@ -73,7 +72,7 @@ photon_rstudioaddin <- function(RscriptRepository) {
                                             ))
                            ),
                            miniUI::miniButtonBlock(border = "bottom",
-                                                   shiny::actionButton('create', "Create job", icon = shiny::icon("play-circle"))
+                                                   shiny::actionButton('create', "Build Electron App", icon = shiny::icon("play-circle"))
                            )
       ),
       miniUI::miniTabPanel(title = 'Update existing Shiny App', icon = shiny::icon("table"),
