@@ -7,16 +7,16 @@ startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_
   message("The directory is ", input_path)
   input_path <- sprintf("%s/electron-quick-start", input_path) 
   #confirm versions greater than (node 8.4.0 and npm 5.3)
-  nodeVersion <- system2("node", args="-v", stdout=TRUE, stderr=TRUE, wait=TRUE, env=environment())
-  npmVersion <- system2("npm", args="-v", stdout=TRUE, stderr=TRUE, wait=TRUE, env=environment())
+  nodeVersion <- system2("node", args="-v", stdout=TRUE, stderr=TRUE)
+  npmVersion <- system2("npm", args="-v", stdout=TRUE, stderr=TRUE)
   #if node not available, notify to install node and npm globally 
   
-  electronPackagerVersion <- system2("npm", args="list -g electron-packager" , stdout=TRUE, stderr=TRUE, wait=TRUE, env=environment())
+  electronPackagerVersion <- system2("npm", args="list -g electron-packager" , stdout=TRUE, stderr=TRUE, wait=TRUE)
   
   if(grepl("electron", electronPackagerVersion[2])){
     electronPackagerVersion <- str_extract(electronPackagerVersion[2], "[0-9]+\\.[0-9]+\\.[0-9]+")
   } else{
-    system2("npm", args='install electron-packager -g', stdout=TRUE, stderr = TRUE, wait=TRUE, env=environment())
+    system2("npm", args='install electron-packager -g', stdout=TRUE, stderr = TRUE, wait=TRUE)
     electronPackagerVersion <- str_extract(electronPackagerVersion[2], "[0-9]+\\.[0-9]+\\.[0-9]+")
   }
   
@@ -31,8 +31,7 @@ startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_
             args=c("clone https://github.com/ColumbusCollaboratory/electron-quick-start", input_path),
             stdout = TRUE, 
             stderr = TRUE,
-            wait=TRUE, 
-            env=environment())
+            wait=TRUE)
   }
   
   
