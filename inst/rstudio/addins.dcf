@@ -1,4 +1,4 @@
 Name: photon
 Description: Launches Photon Electron App Builder
-Binding: photon_rstudioaddin()
+Binding: photon_rstudioaddin
 Interactive: true
