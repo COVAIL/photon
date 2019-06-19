@@ -4,7 +4,7 @@
 #' 
 
 
-photon_rstudioaddin <- function(RscriptRepostiry=NULL) {
+photon_rstudioaddin <- function(RscriptRepository=NULL) {
   
   requireNamespace("shiny")
   requireNamespace("miniUI")
