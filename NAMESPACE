@@ -3,7 +3,6 @@
 export(launch_photonBuild)
 export(photon_rstudioaddin)
 export(startFun)
-import(miniUI)
 import(shiny)
 import(stats)
 import(stringr)

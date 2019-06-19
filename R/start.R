@@ -1,3 +1,5 @@
+#' @export 
+
 startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_packages=NULL){
   library(stringr)
   message("Running Photon")

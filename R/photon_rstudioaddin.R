@@ -1,9 +1,10 @@
 #' @title Launch an RStudio addin to build ShinyApp using Electron Framework 
-#' @import miniUI
+#' 
 #' @export 
+#' 
 
 
-photon_rstudioaddin <- function(...) {
+photon_rstudioaddin <- function(RscriptRepository) {
   
   # cron_current <- function(){
   #   x <- try(parse_crontab(), silent = TRUE)
@@ -16,7 +17,7 @@ photon_rstudioaddin <- function(...) {
   requireNamespace("shiny")
   requireNamespace("miniUI")
   requireNamespace("shinyFiles")
-  #library(photon)
+  
   # current_repo <- file.path(system.file("extdata", package="cronR"), ".RscriptRepository.rds")
   # if(file.access(dirname(current_repo), mode = 2) == -1){
   #   ## No access to the root folder by this user, take tempfolder - will not persist across R sessions
@@ -60,18 +61,19 @@ photon_rstudioaddin <- function(...) {
                                                           shiny::div(class = "control-label", shiny::strong("Selected Rscript")),
                                                           shiny::verbatimTextOutput('currentdirselected'),
                                                           shiny::dateInput('date', label = "Creation date:", startview = "month", weekstart = 1, min = Sys.Date()),
-                                                          shiny::textInput('jobdescription', label = "Job description", value = "Runs a model to predict survival outcomes")
-                                                    
+                                                          shiny::textInput('rscript_args', label = "Additional arguments to Rscript", value = ""),
+                                                          shiny::textInput('rscript_repository', label = "Rscript repository path: launch & log location", value = RscriptRepository)
                                             ),
                                             shiny::column(3,
+                                                          shiny::textInput('jobdescription', label = "Job description", value = "Runs a model to predict survival outcomes"),
                                                           shiny::textInput('cran_packages', label = "CRAN packages", value = "mgcv,matrixStats"),
                                                           shiny::textInput('github_packages', label = "GitHub packages", value = "thomasp85/patchwork"),
-                                                          shiny::textInput('bioc_packages', label = "Bioconductor packages", value = "SummarizedExperiment,VariantAnnotation")
+                                                          shiny::textInput('bioc_packages', label = "Bioconductor packages", value = "SummarizedExperiemnt,VariantAnnotation")
                                                          
                                             ))
                            ),
                            miniUI::miniButtonBlock(border = "bottom",
-                                                   shiny::actionButton('create', "Build Electron App", icon = shiny::icon("play-circle"))
+                                                   shiny::actionButton('create', "Create job", icon = shiny::icon("play-circle"))
                            )
       ),
       miniUI::miniTabPanel(title = 'Update existing Shiny App', icon = shiny::icon("table"),
@@ -157,16 +159,16 @@ photon_rstudioaddin <- function(...) {
 
       rscript_args <- input$rscript_args
       
-     #source("~/Desktop/photon-shiny-addin/R/start.R")
+      
       #print(input$dirSelect)
       #print(getSelectedDir(inputui = input$dirSelect))
       
       #print(as.character(shinyFiles::parseDirPath(volumes, input$dirSelect)))
       
       photon::startFun(as.character(shinyFiles::parseDirPath(volumes, input$dirSelect)), 
-               input$cran_packages,
-               input$bioc_packages,
-               input$github_packages)
+               cran_packages=input$cran_packages,
+               bioc_packages=input$bioc_packages,
+               github_packages=input$github_packages)
     
     })
     
@@ -182,9 +184,9 @@ photon_rstudioaddin <- function(...) {
       shiny::stopApp()
     })
   }
+  
+  # Use a modal dialog as a viewr.
   viewer <- shiny::dialogViewer("Photon Shiny App Builder", width = 700, height = 800)
-  
-  shiny::runGadget(ui, server, viewer = viewer)
-  
-
+  #viewer <- shiny::paneViewer()
+  shiny::runGadget(ui, server, viewer = paneViewer())
 }
