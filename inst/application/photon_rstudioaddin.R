@@ -164,5 +164,5 @@ photon_rstudioaddin <- function(RscriptRepository=NULL) {
   # Use a modal dialog as a viewr.
   viewer <- shiny::dialogViewer("Photon Shiny App Builder", width = 700, height = 800)
   #viewer <- shiny::paneViewer()
-  shiny::runGadget(ui, server, viewer = paneViewer())
+  shiny::runGadget(ui, server, viewer = viewer)
 }
