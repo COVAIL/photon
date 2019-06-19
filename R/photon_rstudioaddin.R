@@ -4,7 +4,7 @@
 #' 
 
 
-photon_rstudioaddin <- function(RscriptRepository) {
+photon_rstudioaddin <- function() {
   
   # cron_current <- function(){
   #   x <- try(parse_crontab(), silent = TRUE)
