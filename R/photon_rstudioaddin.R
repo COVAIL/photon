@@ -38,7 +38,7 @@ photon_rstudioaddin <- function(RscriptRepository=NULL) {
                                                           shiny::verbatimTextOutput('currentdirselected'),
                                                           shiny::dateInput('date', label = "Creation date:", startview = "month", weekstart = 1, min = Sys.Date()),
                                                           shiny::textInput('rscript_args', label = "Additional arguments to Rscript", value = ""),
-                                                          shiny::textInput('rscript_repository', label = "Rscript repository path: launch & log location", RscriptRepository)
+                                                          shiny::textInput('rscript_repository', label = "Rscript repository path: launch & log location", value=NULL)
                                             ),
                                             shiny::column(3,
                                                           shiny::textInput('jobdescription', label = "Job description", value = "Runs a model to predict survival outcomes"),
