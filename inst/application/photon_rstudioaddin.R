@@ -4,37 +4,13 @@
 #' 
 
 
-photon_rstudioaddin <- function() {
+photon_rstudioaddin <- function(RscriptRepository=NULL) {
   
-  # cron_current <- function(){
-  #   x <- try(parse_crontab(), silent = TRUE)
-  #   if(inherits(x, "try-error")){
-  #     x <- list(cronR = character())
-  #   }
-  #   x
-  # }
-  #requireNamespace("photon")
   requireNamespace("shiny")
   requireNamespace("miniUI")
   requireNamespace("shinyFiles")
   
-  # current_repo <- file.path(system.file("extdata", package="cronR"), ".RscriptRepository.rds")
-  # if(file.access(dirname(current_repo), mode = 2) == -1){
-  #   ## No access to the root folder by this user, take tempfolder - will not persist across R sessions
-  #   current_repo <- file.path(tempdir(), ".RscriptRepository.rds")
-  # }
-  # if(missing(RscriptRepository)){
-  #   if(file.exists(current_repo)){
-  #     RscriptRepository <- readRDS(file = current_repo)
-  #   }else{
-  #     RscriptRepository <- system.file("extdata", package="cronR")
-  #     RscriptRepository <- getwd()
-  #     saveRDS(RscriptRepository, file = current_repo)
-  #   }
-  # }
-  # 
-  # check <- NULL
-  # 
+
   ui <- miniUI::miniPage(
     # Shiny fileinput resethandler
     # shiny::tags$script('
@@ -62,7 +38,7 @@ photon_rstudioaddin <- function() {
                                                           shiny::verbatimTextOutput('currentdirselected'),
                                                           shiny::dateInput('date', label = "Creation date:", startview = "month", weekstart = 1, min = Sys.Date()),
                                                           shiny::textInput('rscript_args', label = "Additional arguments to Rscript", value = ""),
-                                                          shiny::textInput('rscript_repository', label = "Rscript repository path: launch & log location")
+                                                          shiny::textInput('rscript_repository', label = "Rscript repository path: launch & log location", value=NULL)
                                             ),
                                             shiny::column(3,
                                                           shiny::textInput('jobdescription', label = "Job description", value = "Runs a model to predict survival outcomes"),
