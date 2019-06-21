@@ -32,16 +32,6 @@ startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_
             stderr = TRUE)
   }
   
-  
-  # subDir <- tempdir()
-  # 
-  # if (!file.exists(subDir)){
-  #   dir.create(file.path(subDir))
-  # }
-  # 
-  #unlink("temp/*")
-  
-  
   ### this copies your app.R
   # file.copy(from=list.files('.', "*.R"), 
   #           to="./electron-quick-start", 
@@ -77,6 +67,9 @@ startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_
     if (is.null(github_packages)){
       github_packages <- "NULL"
     }
+    
+    
+    Sys.setenv(electron_path=r_portable_path)
     
     system(
       sprintf(
