@@ -10,6 +10,7 @@ VignetteBuilder:
 Imports:
 	shiny,
 	miniUI,
+	shinyFiles,
 	stringr,
 	batch,
 	magrittr,
