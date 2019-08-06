@@ -21,6 +21,8 @@ Invocation of the miniUI display can be done in two ways:
 # Installing Packages
 The Mac and Windows R Portables currently come many pre-loaded packages that were selected by popularity. If additional packages (currently only CRAN and Bioconductor packages work; GitHub coming soon) are required, users can enter in a comma-separated string containing the package names of interest in the miniUI. These packages will install the packages to the relative version of R portable that will be subsequently packaged in to an Electron standalone application.    
 
+If no packages are needed to install, type `NULL` as the entry for those specific repositories.
+
 # Issues
 Please submit a pull request for issues related to this package.  
 
