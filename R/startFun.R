@@ -69,7 +69,7 @@ startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_
     
     app_dir <- stringr::str_replace_all(input_path, "/", "\\\\")
 
-    file.copy(sprintf("%s/app.R", input_path), sprintf("%s/electron-quick-start", input_path), overwrite=TRUE)
+    file.copy(sprintf("%s/app.R", app_dir), sprintf("%s/electron-quick-start", input_path), overwrite=TRUE)
     
     shell(sprintf("cd %s && npm install", app_dir))
     
@@ -107,6 +107,8 @@ startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_
       ), wait=TRUE
     )
     
+    file.copy(sprintf("%s/app.R", input_path), sprintf("%s/electron-quick-start", input_path), overwrite=TRUE)
+  
     
     system(sprintf("cd %s; npm install; npm run package-mac", r_portable_path))
   }
