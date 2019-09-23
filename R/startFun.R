@@ -5,10 +5,16 @@ startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_
   #input_path <- "C:/Users/collab/Desktop"
   message("Running Photon")
   message("The directory is ", input_path)
-  input_path <- sprintf("%s/electron-quick-start", input_path) 
+  electron_path <- sprintf("%s/electron-quick-start", input_path) 
   #confirm versions greater than (node 8.4.0 and npm 5.3)
-  nodeVersion <- system2('node', args='-v', stdout=TRUE, stderr=TRUE)
-  npmVersion <- system2("npm", args="-v", stdout=TRUE, stderr=TRUE)
+  nodeVersion <- system2('node', 
+                         args='-v', 
+                         stdout=TRUE, 
+                         stderr=TRUE)
+  npmVersion <- system2("npm",
+                        args="-v", 
+                        stdout=TRUE, 
+                        stderr=TRUE)
   #if node not available, notify to install node and npm globally 
   
   electronPackagerVersion <- system2("npm", args="list -g electron-packager" , stdout=TRUE, stderr=TRUE, wait=TRUE)
@@ -16,10 +22,23 @@ startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_
   if(grepl("electron", electronPackagerVersion[2])){
     electronPackagerVersion <- stringr::str_extract(electronPackagerVersion[2], "[0-9]+\\.[0-9]+\\.[0-9]+")
   } else{
-    system2("npm", args='install electron --verbose', stdout=TRUE, stderr = TRUE, wait=TRUE)
-    system2("npm", args='install electron-packager -g', stdout=TRUE, stderr = TRUE, wait=TRUE)
-    electronPackagerVersion <- system2("npm", args="list -g electron-packager" , stdout=TRUE, stderr=TRUE, wait=TRUE)
-    electronPackagerVersion <- stringr::str_extract(electronPackagerVersion[2], "[0-9]+\\.[0-9]+\\.[0-9]+")
+    system2("npm",
+            args='install electron --verbose', 
+            stdout = TRUE, 
+            stderr = TRUE, 
+            wait = TRUE)
+    system2("npm",
+            args='install electron-packager -g', 
+            stdout = TRUE, 
+            stderr = TRUE, 
+            wait = TRUE)
+    electronPackagerVersion <- system2("npm", 
+                                       args="list -g electron-packager",
+                                       stdout=TRUE, 
+                                       stderr=TRUE, 
+                                       wait=TRUE)
+    electronPackagerVersion <- stringr::str_extract(electronPackagerVersion[2],
+                                                    "[0-9]+\\.[0-9]+\\.[0-9]+")
   }
     
   #confirm git is installed and available
@@ -28,7 +47,7 @@ startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_
   #if git not available, notify to install git
   #git clone electron-shiny sample app
   
-  if(!dir.exists(input_path)){
+  if(!dir.exists(electron_path)){
     system2("git", 
             args=c("clone https://github.com/ColumbusCollaboratory/electron-quick-start", input_path),
             stdout = TRUE, 
@@ -36,13 +55,12 @@ startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_
             wait=TRUE)
   }
   
-  
+
   
   if(.Platform$OS.type=="windows"){
-    r_portable_path <- sprintf("%s/R-Portable-Win/bin", input_path)
+    r_portable_path <- sprintf("%s/R-Portable-Win/bin", electron_path)
     
-    
-
+  
     if(is.null(bioc_packages)){
       bioc_packages <- "NULL"
     } 
@@ -67,23 +85,33 @@ startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_
       )
     )
     
-    app_dir <- stringr::str_replace_all(input_path, "/", "\\\\")
+    input_app_dir <- stringr::str_replace_all(input_path, "/", "\\\\")
+    electron_win_dir <- stringr::str_replace_all(electron_path, "/", "\\\\")
 
-    file.copy(sprintf("%s/app.R", app_dir), sprintf("%s/electron-quick-start", input_path), overwrite=TRUE)
+    file.copy(sprintf("%s\\app.R", 
+                      input_app_dir), 
+                      electron_win_dir,
+              overwrite=TRUE)
     
-    shell(sprintf("cd %s && npm install", app_dir))
+    shell(sprintf("cd %s && npm install",
+                  app_dir))
     
-    shell(sprintf("cd %s && npm run package-win", app_dir))
+    shell(sprintf("cd %s && npm run package-win",
+                  app_dir))
     
     
   } else if(.Platform$OS.type=="unix") {
-    r_portable_path <- sprintf("%s/R-Portable-Mac", input_path)
+    r_portable_path <- sprintf("%s/R-Portable-Mac",
+                               input_path)
     
     
-    r_electron_version <- system(sprintf("cd %s; ./R CMD BATCH --version", r_portable_path),
-                                 intern = TRUE, wait=TRUE)[5]
+    r_electron_version <- system(sprintf("cd %s; ./R CMD BATCH --version", 
+                                         r_portable_path),
+                                 intern = TRUE, 
+                                 wait=TRUE)[5]
     
-    r_electron_version <- stringr::str_extract(r_electron_version, "[0-9]+\\.[0-9]+\\.[0-9]+")
+    r_electron_version <- stringr::str_extract(r_electron_version,
+                                               "[0-9]+\\.[0-9]+\\.[0-9]+")
     
     if(is.null(bioc_packages)){
       bioc_packages <- "NULL"
@@ -107,14 +135,15 @@ startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_
       ), wait=TRUE
     )
     
-    file.copy(sprintf("%s/app.R", input_path), sprintf("%s/electron-quick-start", input_path), overwrite=TRUE)
-  
-    
-    system(sprintf("cd %s; npm install; npm run package-mac", r_portable_path))
+    file.copy(sprintf("%s/app.R",
+                      input_path),
+              sprintf("%s/electron-quick-start",
+                      input_path),
+              overwrite=TRUE)
+
+    system(sprintf("cd %s; npm install; npm run package-mac", 
+                   r_portable_path))
   }
-  
-
-
 }
 
 
