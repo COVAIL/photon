@@ -94,10 +94,10 @@ startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_
               overwrite=TRUE)
     
     shell(sprintf("cd %s && npm install",
-                  input_app_dir))
+                  electron_win_dir))
     
     shell(sprintf("cd %s && npm run package-win",
-                  input_app_dir))
+                  electron_win_dir))
     
     
   } else if(.Platform$OS.type=="unix") {
