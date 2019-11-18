@@ -1,3 +1,5 @@
+*** please note: Photon doesn't work with any package that has to be compiled; where the binaries are not fully available (without compiling). The reason is that that would require management of the temporary directory for libPath to be used for compiling packages and that needs to be changed in the bash script that launches R. We haven't had time to try to address this issue in photon (in the bash scripting).***
+
 # Photon Package
 Photon is an R package that contains an RStudio add-in miniUI that builds a Photon application. Photon builds standalone Shiny app by leveraging the Electron framework in Mac OS and Windows operating systems. This package clones the [Columbus Collaboratory electron-quick-start repository](https://github.com/ColumbusCollaboratory/electron-quick-start) which is forked to the electron-quick-start git repository plus Mac and Windows R portables. Photon will be extended to Linux in the near future. This work is still underdevelopment.
 
