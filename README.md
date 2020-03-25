@@ -29,7 +29,7 @@ If no packages are needed to install, type `NULL` as the entry for those specifi
 Please submit a pull request for issues related to this package.  
 
 # Contact
-For photon questions contact arizvi@cbuscollaboratory.com   
+For photon questions contact pgordon@cbuscollaboratory.com   
 For questions about the implementation of Electron, Chromium or node.js contact pgordon@cbuscollaboratory.com   
 For questions about the R portable contact snikitin@cbuscollaboratory.com  
 
