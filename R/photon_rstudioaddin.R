@@ -7,11 +7,7 @@
 
 
 photon_rstudioaddin <- function(RscriptRepository = NULL) {
-  requireNamespace("shiny")
-  requireNamespace("miniUI")
-  requireNamespace("shinyFiles")
-  
-  
+
   ui <- miniUI::miniPage(
     # Shiny fileinput resethandler
     
