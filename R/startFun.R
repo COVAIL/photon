@@ -1,18 +1,30 @@
+#' The main photon function
+#' @param input_path input path for Shiny app.R
+#' @param cran_packages comma separated CRAN packages
+#' @param bioc_packages comma separated Bioconductor packages
+#' @param github_packages comma separated github packages
 #' @import stringr
+#' @import glue
 #' @export
 startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_packages=NULL){
-  library(stringr)
-  #input_path <- "C:/Users/collab/Desktop"
+  # library(stringr)
+  # input_path <- "C:/Users/collab/Desktop"
   message("Running Photon")
 
   input_path <- normalizePath(input_path)
-  electron_path <- normalizePath(file.path(input_path, "electron-quick-start"))
+  electron_path <- normalizePath(
+    file.path(
+      input_path,
+      "electron-quick-start"
+      )
+    )
 
   #confirm versions greater than (node 8.4.0 and npm 5.3)
   nodeVersion <- system2('node', 
                          args='-v', 
                          stdout=TRUE, 
                          stderr=TRUE)
+  
   npmVersion <- system2("npm",
                         args="-v", 
                         stdout=TRUE, 

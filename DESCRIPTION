@@ -8,14 +8,15 @@ Description: Build self-contained Shiny Apps via Electron software framework
 VignetteBuilder:
 	knitr
 Imports:
-	shiny,
-	miniUI,
-	shinyFiles,
-	stringr,
-	batch,
-	magrittr,
-	stats,
-	utils
+    shiny,
+    miniUI,
+    shinyFiles,
+    stringr,
+    batch,
+    magrittr,
+    stats,
+    utils,
+    glue
 Suggests:
 	knitr,
 	rmarkdown
