@@ -10,12 +10,13 @@ startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_
 
   message("Running Photon")
 
-  input_path <- normalizePath(input_path)
+  input_path <- normalizePath(input_path, winslash = "/")
   electron_path <- normalizePath(
     file.path(
       input_path,
       "electron-quick-start"
       )
+    , winslash = "/"
     )
 
   #confirm versions greater than (node 8.4.0 and npm 5.3)
@@ -72,7 +73,7 @@ startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_
   
   if(.Platform$OS.type=="windows"){
     
-    r_portable_path <- normalizePath(file.path(electron_path, "R-Portable-Win", "bin"))
+    r_portable_path <- normalizePath(file.path(electron_path, "R-Portable-Win", "bin"), winslash = "/")
   
     if(is.null(bioc_packages)){
       bioc_packages <- "NULL"
@@ -106,7 +107,7 @@ startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_
     
     
     
-    file.copy(normalizePath(file.path(input_app_dir, "app.R")), 
+    file.copy(normalizePath(file.path(input_app_dir, "app.R"), winslash = "/"), 
                       electron_win_dir,
               overwrite=TRUE)
     
@@ -118,7 +119,7 @@ startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_
     
     
   } else if(.Platform$OS.type=="unix") {
-    r_portable_path <- normalizePath(file.path(input_path, "R-Portable-Mac"))
+    r_portable_path <- normalizePath(file.path(input_path, "R-Portable-Mac"), winslash = "/")
     
     
     r_electron_version <- system(sprintf("cd %s; ./R CMD BATCH --version", 
