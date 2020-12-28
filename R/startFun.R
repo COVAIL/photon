@@ -160,6 +160,7 @@ startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_
     system(sprintf("cd %s; npm install; npm run package-mac", 
                    r_portable_path))
   }
+  message("Photon finished")
 }
 
 
