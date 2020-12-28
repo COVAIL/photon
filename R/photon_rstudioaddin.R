@@ -14,7 +14,7 @@ photon_rstudioaddin <- function(RscriptRepository = NULL) {
     # Shiny fileinput resethandler
     
     miniUI::gadgetTitleBar("Use Photon to Build Standalone Shiny Apps",
-                           left = NULL, right = NULL),
+                           left = NULL),
     
     miniUI::miniTabstripPanel(
       #miniUI::miniTabPanel(
@@ -56,10 +56,6 @@ photon_rstudioaddin <- function(RscriptRepository = NULL) {
         )))),
       miniUI::miniButtonBlock(
         actionButton("create", "Build", icon("play-circle"),
-                     style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
-      ),
-      miniUI::miniButtonBlock(
-        actionButton("done", "Done", icon("stop-circle"),
                      style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
       )
   )
