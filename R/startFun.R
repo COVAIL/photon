@@ -118,7 +118,7 @@ startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_
     
     
   } else if(.Platform$OS.type=="unix") {
-    r_portable_path <- normalizePath(file.path(input_path, "R-Portable-Mac"))
+    r_portable_path <- normalizePath(file.path(electron_path, "R-Portable-Mac"))
     
     
     r_electron_version <- system(sprintf("cd %s; ./R CMD BATCH --version", 
@@ -160,6 +160,7 @@ startFun <- function(input_path, cran_packages=NULL, bioc_packages=NULL, github_
     system(sprintf("cd %s; npm install; npm run package-mac", 
                    r_portable_path))
   }
+  message("Photon finished")
 }
 
 

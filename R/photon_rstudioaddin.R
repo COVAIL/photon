@@ -14,7 +14,7 @@ photon_rstudioaddin <- function(RscriptRepository = NULL) {
     # Shiny fileinput resethandler
     
     miniUI::gadgetTitleBar("Use Photon to Build Standalone Shiny Apps",
-                           left = NULL, right = NULL),
+                           left = NULL),
     
     miniUI::miniTabstripPanel(
       #miniUI::miniTabPanel(
